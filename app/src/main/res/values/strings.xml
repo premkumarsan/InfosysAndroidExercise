@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">InfosysAndroidExercise</string>
+
+    <string name="noData">No Data Available</string>
+    <string name="nil">Nil</string>
+    <string name="noInternet">No Internet Connection</string>
+
 </resources>
