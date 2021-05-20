@@ -62,6 +62,7 @@
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            setPadding="@{@dimen/_2sdp}"
             android:scaleType="fitXY"
             android:src="@drawable/no_img_placeholder"
             tools:ignore="ContentDescription,RtlCompat" />

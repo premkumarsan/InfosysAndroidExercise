@@ -42,7 +42,7 @@ class Dashboard : AppCompatActivity() {
         /*
          * Retrieving response from the LiveData
          */
-        viewModel.mutableLiveData.observe(this, {
+        viewModel.responseLiveData.observe(this, {
 
             if (it != null && it is ResponseModel) {
                 responseList.clear()

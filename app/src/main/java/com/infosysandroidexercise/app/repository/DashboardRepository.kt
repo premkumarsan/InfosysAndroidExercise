@@ -30,8 +30,8 @@ class DashboardRepository {
     @Inject
     lateinit var retrofit: Retrofit
 
-    val responseLiveData: MutableLiveData<Any> = MutableLiveData<Any>()
-    val loadingLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    val responseMutableLiveData: MutableLiveData<Any> = MutableLiveData<Any>()
+    val loadingMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
         val apiComponent: APIComponent = MyApplication.apiComponent
@@ -47,21 +47,21 @@ class DashboardRepository {
         val observable: Observable<ResponseModel> =
             apiInterface?.dashboardRequest() as Observable<ResponseModel>
 
-        loadingLiveData.postValue(true)
+        loadingMutableLiveData.postValue(true)
         compositeDisposable?.add(
             observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ posts ->
                     if (posts != null) {
-                        responseLiveData.postValue(posts)
+                        responseMutableLiveData.postValue(posts)
                     } else {
-                        responseLiveData.postValue("Response Failed")
+                        responseMutableLiveData.postValue("Response Failed")
                     }
-                    loadingLiveData.postValue(false)
+                    loadingMutableLiveData.postValue(false)
                 }, {
-                    responseLiveData.postValue(handleApiError(it))
-                    loadingLiveData.postValue(false)
+                    responseMutableLiveData.postValue(handleApiError(it))
+                    loadingMutableLiveData.postValue(false)
                 })
         )
     }

@@ -10,13 +10,13 @@ class DashboardViewModel(dashboardRepository: DashboardRepository) : ViewModel()
 
     private var repository = dashboardRepository
     private var compositeDisposable: CompositeDisposable? = null
-    var mutableLiveData: LiveData<Any>
+    var responseLiveData: LiveData<Any>
     var progressLiveData: LiveData<Boolean>
 
     init {
         compositeDisposable = CompositeDisposable()
-        mutableLiveData = repository.responseLiveData
-        progressLiveData = repository.loadingLiveData
+        responseLiveData = repository.responseMutableLiveData
+        progressLiveData = repository.loadingMutableLiveData
         requestDashboardData()
     }
 
