@@ -1,7 +1,6 @@
 package com.infosysandroidexercise.app.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import com.infosysandroidexercise.app.model.ResponseModel
 import com.infosysandroidexercise.app.model.RowModel
@@ -49,9 +48,10 @@ class DashboardViewModelTest {
         )
 
         val item = ResponseModel(rows = itemRow, title = "Android Response Test")
-        val liveData: MutableLiveData<Any> = MutableLiveData<Any>()
-        viewModel?.responseLiveData = liveData
-        liveData.value = item
+
+        viewModel?.requestDashboardData()
+
+        viewModel?.responseLiveData?.value = item
 
         val value = viewModel?.responseLiveData?.getOrAwaitValueTest()
 

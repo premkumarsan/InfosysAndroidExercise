@@ -35,8 +35,7 @@ class Dashboard : AppCompatActivity() {
          */
         adapter = DashboardAdapter(responseList)
         binding.adapter = adapter
-        binding.dataAvailable = true
-        binding.showProgress = false
+        binding.viewModel = viewModel
 
 
         /*
@@ -49,16 +48,9 @@ class Dashboard : AppCompatActivity() {
                 binding.title.text = it.title
                 it.rows.let { it1 -> responseList.addAll(it1) }
                 binding.adapter?.notifyDataSetChanged()
-                binding.dataAvailable = it.rows.isNotEmpty()
             } else if (it != null && it is String) {
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            } else {
-                binding.dataAvailable = false
             }
-        })
-
-        viewModel.progressLiveData.observe(this, {
-            binding.showProgress = it
         })
 
     }

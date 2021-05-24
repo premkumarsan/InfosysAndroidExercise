@@ -12,17 +12,13 @@
         <import type="android.view.View" />
 
         <variable
-            name="showProgress"
-            type="Boolean" />
-
-        <variable
-            name="dataAvailable"
-            type="Boolean" />
+            name="viewModel"
+            type="com.infosysandroidexercise.app.viewmodel.DashboardViewModel" />
 
     </data>
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -34,7 +30,10 @@
             android:background="@color/teal_200"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
-            app:contentInsetStartWithNavigation="0dp">
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.infosysandroidexercise.base.CustomTextView
                 android:id="@+id/title"
@@ -55,15 +54,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
+            android:layout_height="0dp"
             android:background="@color/colorDimViewGrey1"
             android:orientation="vertical"
-            android:visibility="@{showProgress?View.GONE:View.VISIBLE}"
+            android:visibility="@{viewModel.progressLiveData?View.GONE:View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:setAdapter="@{adapter}"
             tools:listitem="@layout/dashboard_single_screen"
             tools:visibility="gone" />
@@ -74,7 +73,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:indeterminateDrawable="@drawable/progress"
-            android:visibility="@{showProgress?View.VISIBLE:View.GONE}"
+            android:visibility="@{viewModel.progressLiveData?View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:visibility="gone" />
 
         <TextView
@@ -88,9 +91,12 @@
             android:text="@string/noData"
             android:textColor="@color/black"
             android:textSize="@dimen/_13ssp"
-            android:visibility="@{dataAvailable?View.GONE:View.VISIBLE}"
-            tools:ignore="HardcodedText,RtlCompat"
+            android:visibility="@{viewModel.dataAvailable?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:visibility="gone" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

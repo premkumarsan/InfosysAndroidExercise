@@ -1,7 +1,6 @@
 package com.infosysandroidexercise.app.repository
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import com.infosysandroidexercise.R
 import com.infosysandroidexercise.app.model.ResponseModel
 import com.infosysandroidexercise.base.APIComponent
@@ -30,9 +29,6 @@ class DashboardRepository {
     @Inject
     lateinit var retrofit: Retrofit
 
-    val responseMutableLiveData: MutableLiveData<Any> = MutableLiveData<Any>()
-    val loadingMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
-
     init {
         val apiComponent: APIComponent = MyApplication.apiComponent
         apiComponent.inject(this)
@@ -43,25 +39,22 @@ class DashboardRepository {
     /*
      * Function to make Api request through RxJava
      */
-    fun fetchData(compositeDisposable: CompositeDisposable?) {
+    fun fetchData(compositeDisposable: CompositeDisposable?, dataInterpreter: (Any?) -> Unit) {
         val observable: Observable<ResponseModel> =
             apiInterface?.dashboardRequest() as Observable<ResponseModel>
 
-        loadingMutableLiveData.postValue(true)
         compositeDisposable?.add(
             observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ posts ->
                     if (posts != null) {
-                        responseMutableLiveData.postValue(posts)
+                        dataInterpreter(posts)
                     } else {
-                        responseMutableLiveData.postValue("Response Failed")
+                        dataInterpreter("Response Failed")
                     }
-                    loadingMutableLiveData.postValue(false)
                 }, {
-                    responseMutableLiveData.postValue(handleApiError(it))
-                    loadingMutableLiveData.postValue(false)
+                    dataInterpreter(handleApiError(it))
                 })
         )
     }

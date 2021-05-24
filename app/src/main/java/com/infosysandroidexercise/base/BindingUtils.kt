@@ -45,20 +45,6 @@ object BindingUtils {
         )
     }
 
-
-    @BindingAdapter("setPaddingStart")
-    @JvmStatic
-    fun setPaddingStart(view: View, padding: Int) {
-        view.setPadding(
-            padding,
-            view.paddingTop,
-            view.paddingRight,
-            view.paddingBottom
-        )
-    }
-
-
-
     /*
      * Loading the image to Picasso
      */
